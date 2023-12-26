@@ -1,0 +1,14 @@
+.my-profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    border-bottom: 2px solid #1890ff;
+    width: 90%;
+     /* padding: 8px,  */
+     /* marginBottom: '20px' */
+  }
+  .job-heading{
+    position: absolute;
+    margin-bottom: 650px;
+  }
