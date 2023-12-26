@@ -78,27 +78,27 @@ const MyProfile = () => {
             name="firstName"
             rules={[{ required: true, message: 'Please input your first name!' }]}
           >
-            <Input style={{ width: '300px' }} />
+            <Input style={{ width: '300px' }} placeholder="First Name" />
           </Form.Item>
           <Form.Item<Profile>
             label="Last Name"
             name="lastName"
             rules={[{ required: true, message: 'Please input your last name!' }]}
           >
-            <Input style={{ width: '300px' }} />
+            <Input style={{ width: '300px' }} placeholder="Last Name"/>
           </Form.Item>
           <Form.Item<Profile>
             label="Address"
             name={["address", "street1"]}
             rules={[{ required: true, message: 'Please input your address!' }]}
           >
-            <Input style={{ width: '500px' }} />
+            <Input style={{ width: '500px' }} placeholder="street1" />
           </Form.Item>
           <Form.Item<Profile>
             name={["address", "street2"]}
             // rules={[{ required: true, message: 'Please input yo' }]}
           >
-            <Input style={{ width: '500px', marginLeft: '18em' }} />
+            <Input style={{ width: '500px', marginLeft: '18em' }} placeholder="street2" />
           </Form.Item>
           <div style={{ display: 'flex', marginLeft: '18em' }}>
             <Form.Item<Profile>
@@ -152,7 +152,7 @@ const MyProfile = () => {
             rules={[{ required: true, message: 'Please input your phone!' }]}
 
             >
-             <Input type="number" />
+             <Input type="number" placeholder="Enter your Phone Number" />
           </Form.Item>
           <Form.Item<Profile>
             label="Position for which you are applying for?"
@@ -203,7 +203,7 @@ const MyProfile = () => {
             name="cv"
             accept=".pdf, .doc, .docx"
             showUploadList={false}
-            beforeUpload={() => false} // To prevent automatic upload, we return false
+            beforeUpload={() => false}
             onChange={(info) => handleFileChange(info.file as any)}
           >
             <Button icon={<UploadOutlined />}>Click to Upload</Button>
