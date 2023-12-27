@@ -4,33 +4,52 @@ import "./login.css";
 import { Form, Input, Button, Space, Alert } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import UserApi from './services/userApi';
+import axios from "axios";
 
 const LoginPage = () => {
   const [form] = Form.useForm();
   const [loginError, setErrorAlert] = useState<string | null>(null);
-  const [loginSuccess, setLoginSuccess] = useState<string | null >(null);
-  const navigate = useNavigate();
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
-    if (values?.username && values?.password) {
-      setLoginSuccess('Log in Successful');
-      sessionStorage.setItem('username',JSON.stringify(values?.username));
-      setTimeout(()=>{
-        navigate("/my-profile");
+  const [loginSuccess, setLoginSuccess] = useState<string | null>(null);
+  // const { data, loading, error, makePostRequest } = UserApi();
+  const [data, setData] = useState(null);
 
-      },2000);
-    } else {
+  const navigate = useNavigate();
+  const onFinish = async (values: any) => {
+    console.log("Success:", values);
+    try {
+      // Example of a POST request
+      const requestBody = { useremail: values?.useremail, userpass: values?.password };
+      // let response = await makePostRequest('authenticate', requestBody);
+      // console.log("result ",data)
+      const response: any = await axios.post(`http://localhost:4000/api/authenticate`, requestBody, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      setData(response.data);
+      console.log('data', response?.data);
+      if (response?.data) {
+        setLoginSuccess('Log in Successful');
+        sessionStorage.setItem('useremail', (values?.useremail));
+        setTimeout(() => {
+          navigate("/my-profile");
+        }, 2000);
+      }
+    } catch (error) {
+      // console.error('Error:', error.message);
+
+      // Handle errors as needed
       setErrorAlert("Something went wrong");
-      setTimeout (() => {
+      setTimeout(() => {
         setErrorAlert(null);
-      },2000);
+      }, 2000);
     }
-    // console.log(form);
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
-    console.log(form?.getFieldError("username"));
+    console.log(form?.getFieldError("useremail"));
   };
 
   return (
@@ -63,7 +82,7 @@ const LoginPage = () => {
       </Space>
       <div className="login-page">
         <Form style={{ width: "400px" }} onFinish={onFinish} form={form}>
-          <Form.Item label="Username" name="username">
+          <Form.Item label="User Email" name="useremail">
             <Input />
           </Form.Item>
 

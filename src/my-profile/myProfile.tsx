@@ -1,22 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./myProfile.css";
 import { Form, Input, Space, Select, Button,message, Upload} from "antd";
 import { UserOutlined,UploadOutlined } from "@ant-design/icons";
 import Profile from "./modals/profile";
+import { useNavigate } from "react-router-dom";
 
 const MyProfile = () => {
-  const username = sessionStorage.getItem("username")
-    ? sessionStorage.getItem("username")
-    : null;
+ 
   const [form] = Form.useForm();
   const options: String[] = ['India', 'Pakistan', 'Australia', 'Singapore', 'China', 'Qatar', 'England'];
-  const jobs: string[] = ['Angular Developer','Java Developer','Sales Executive','Intern','Pyton Developer'];
+  const jobs: string[] = ['Angular Developer','Java Developer','Sales Executive','Intern','Python Developer'];
   const workMode: string[] = ['Hybrid', 'Work From Office','Work from Home','Part time'];
   const [optionSelect, setOption] = useState<string>('');
   const [job, selectJob] = useState<string>('');
   const [mode, selectedMode] = useState<string>('');
   const [cvFile, setCvFile] = useState(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if(!sessionStorage?.getItem('useremail')){
+      navigate("/");
+    };
+  });
+ 
+  const findInitials = (useremail: string | null) => {
+    const pos = useremail?.indexOf('@');
+    const username = useremail?.split('').splice(0,pos).join('');
+    return username;
+  };
 
+  const username = sessionStorage.getItem("useremail")
+  ? findInitials(sessionStorage.getItem("useremail"))
+  : null;
 
   const onFormFinish = (values: any) => {
     console.log('form success');
@@ -206,11 +220,10 @@ const MyProfile = () => {
             beforeUpload={() => false}
             onChange={(info) => handleFileChange(info.file as any)}
           >
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+            <Button icon={<UploadOutlined/>}>Click to Upload</Button>
             {/* {cvFile} */}
             {cvFile && <span style={{ marginLeft: '8px' }}>{(cvFile as any).name}</span>}
-
-          </Upload>
+           </Upload>
         </Form.Item>
           <Space>
             <Button htmlType="submit" type="primary" > Submit</Button>
