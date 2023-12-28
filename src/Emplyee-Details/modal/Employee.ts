@@ -5,6 +5,7 @@ export interface Employee {
       dateOfBirth?:String | Number,
       domain?:  String,
       yearsOfExperience?:  Number,
-      salary: Number   
+      salary: Number,
+      location?: String  
 
 }

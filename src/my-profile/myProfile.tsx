@@ -4,6 +4,7 @@ import { Form, Input, Space, Select, Button,message, Upload} from "antd";
 import { UserOutlined,UploadOutlined } from "@ant-design/icons";
 import Profile from "./modals/profile";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const MyProfile = () => {
  
@@ -18,21 +19,13 @@ const MyProfile = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if(!sessionStorage?.getItem('useremail')){
-      navigate("/");
+      navigate("/login");
     };
   });
  
-  const findInitials = (useremail: string | null) => {
-    const pos = useremail?.indexOf('@');
-    const username = useremail?.split('').splice(0,pos).join('');
-    return username;
-  };
+ 
 
-  const username = sessionStorage.getItem("useremail")
-  ? findInitials(sessionStorage.getItem("useremail"))
-  : null;
-
-  const onFormFinish = (values: any) => {
+  const onFormFinish = async(values: any) => {
     console.log('form success');
     // console.log(values);
     const updatedValues: Profile = {
@@ -40,8 +33,24 @@ const MyProfile = () => {
       cv: cvFile,
     };
 
-    console.log(updatedValues);
-    console.log("CV File:", cvFile);
+    console.log(JSON.stringify(updatedValues));
+
+    try{
+      const response: any = await axios.post(`http://localhost:4000/api/profile-update`, updatedValues, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if(response) {
+        message.success('Your Job Profile is Saved in Our Database');
+        form.resetFields();
+      } else {
+        message.error('Failed to Save')
+      }
+    } catch (error: any) {
+      message.error(error)
+    }
+
   }
   
   const jobsSelected = (value: string) => {
@@ -75,9 +84,8 @@ const MyProfile = () => {
   }
   return (
     <>
-      <h3 style={{marginLeft: '45em',marginBottom: '1em'}}>Hi {username}</h3>
       <div className="my-profile">
-        <h3 className="job-heading">Job Seeker Application</h3>
+        <h3 className="job-heading">Job Seeker Form</h3>
         <Form
           name="basic"
           labelCol={{ span: 8 }}
@@ -210,9 +218,8 @@ const MyProfile = () => {
                 </Select>
               </Space>
             </Form.Item>
-            <Form.Item label="Upload CV" extra="Upload your CV in PDF or Word format"             
-            rules={[{ required: true, message: 'Please upload a cv!' }]}
->
+          <Form.Item label="Upload CV" extra="Upload your CV in PDF or Word format"             
+            rules={[{ required: true, message: 'Please upload a cv!' }]}>
           <Upload
             name="cv"
             accept=".pdf, .doc, .docx"

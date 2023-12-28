@@ -1,6 +1,32 @@
+/* login.css */
+
 .login-page {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 90vh;
+  /* justify-content: flex-start; */
+  height: 70vh; /* 100% of the viewport height */
+  margin-top: 5%;
+  background: rgba(46, 112, 234, 0.906);
+  width: 500px;
+  margin-left: 35%;
+  padding-top: 10%;
+  border: 2px solid gainsboro;
+}
+
+.user {
+  border-radius: 50%;
+  border: 2px solid blue;
+  background-color: blue;
+  margin-bottom: 20px ;
+  width: 70px;
+}
+
+.user-icon {
+  font-size: 45px;
+  margin-bottom: 20px;
+  color:white;
+  margin-top: 5px;
+  margin-left: 10px;
+ 
 }

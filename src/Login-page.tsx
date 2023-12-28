@@ -33,7 +33,7 @@ const LoginPage = () => {
         setLoginSuccess('Log in Successful');
         sessionStorage.setItem('useremail', (values?.useremail));
         setTimeout(() => {
-          navigate("/my-profile");
+          navigate("/");
         }, 2000);
       }
     } catch (error) {
@@ -81,6 +81,10 @@ const LoginPage = () => {
         )}
       </Space>
       <div className="login-page">
+        <Space className="user">
+        <UserOutlined className="user-icon" />
+
+        </Space>
         <Form style={{ width: "400px" }} onFinish={onFinish} form={form}>
           <Form.Item label="User Email" name="useremail">
             <Input />
@@ -101,8 +105,7 @@ const LoginPage = () => {
                     form
                       ?.getFieldsError()
                       .some((field) => field.errors.length > 0)
-                  }
-                >
+                  }>
                   Submit
                 </Button>
                 <Button htmlType="button" onClick={() => form.resetFields()}>
