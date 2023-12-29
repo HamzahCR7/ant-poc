@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import "./login.css";
 import { Form, Input, Button, Space, Alert } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import UserApi from './services/userApi';
 import axios from "axios";
+import Register from "./register/register";
 
 const LoginPage = () => {
   const [form] = Form.useForm();
@@ -115,6 +116,7 @@ const LoginPage = () => {
             </Form.Item>
           </div>
         </Form>
+        <Space> Not a registered User? Click to <span style={{ textDecoration: 'underline', 'cursor': 'pointer' }} onClick={()=> navigate('/register')}> Register</span> </Space>
       </div>
     </>
   );

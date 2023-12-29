@@ -7,6 +7,7 @@ import EmployeeDetails from './Emplyee-Details/employee';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './Home/home';
 import  Header  from './header/header';
+import Register from './register/register';
 
 
 const App = () => (
@@ -18,6 +19,7 @@ const App = () => (
         <Route path="/login" element={<LoginPage />} />
         <Route path="/my-profile" element={<MyProfile />} />
         <Route path="/employee-details" element={<EmployeeDetails />} />
+        <Route  path='/register' element={<Register />}/>
       </Routes>
     </BrowserRouter>
   </>

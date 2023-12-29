@@ -1,13 +1,9 @@
+import { LoginOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { Link, Routes, Route, useNavigate } from "react-router-dom";
 // import './home.css';
 const Header = () => {  
     const navigate = useNavigate();
-    useEffect(() => {
-        if (!sessionStorage?.getItem('useremail')) {
-            navigate("/login");
-        };
-    })
 
     const findInitials = (useremail: string | null) => {
         const pos = useremail?.indexOf('@');
@@ -48,12 +44,14 @@ const Header = () => {
            
                 </div>
                 <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-            {username &&  <p className="nav-link">
-                Hi {username}
-              </p>
-}
-            </li>
+                    <li className="nav-item">
+                        {username && <p className="nav-link"> Hi {username}</p>}
+
+                    </li>
+                    <li className="nav-item">
+                    {username && <LoginOutlined onClick={()=>{sessionStorage.removeItem('useremail');navigate('/login')}} style={{cursor:'pointer'}} />}
+
+                    </li>
           </ul>
             </nav>
         </>
